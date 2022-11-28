@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from '../contexts/AuthContext';
 
 import 'react-toastify/dist/ReactToastify.css';
+import Header from '../components/Header';
 
 const theme = createTheme();
 
@@ -13,6 +14,7 @@ function App({ Component, pageProps }: AppProps): JSX.Element {
     <ThemeProvider theme={theme}>
       <AuthProvider>
         <ToastContainer />
+        <Header />
         <Component {...pageProps} />
       </AuthProvider>
     </ThemeProvider>

@@ -101,7 +101,14 @@ function Login(): JSX.Element {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/">Não tem conta? Registrar-se</Link>
+                <Link
+                  href="/register"
+                  style={{
+                    textDecoration: 'underline',
+                    color: 'blue'
+                  }}>
+                  Não tem conta? Registrar-se
+                </Link>
               </Grid>
             </Grid>
           </Box>

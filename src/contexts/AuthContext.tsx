@@ -82,13 +82,13 @@ export function AuthProvider({ children }: ProviderProps): JSX.Element {
         .get(`/auth/me`)
         .then(({ data }) => {
           setUser(data.user);
-          setIsLoadingSplash(false);
         })
         .catch(() => {
           setUser(null);
           destroyCookie(undefined, 'authtoken');
           Router.push('/login');
-        });
+        })
+        .finally(() => setIsLoadingSplash(false));
     }
 
     if (authtoken) {
