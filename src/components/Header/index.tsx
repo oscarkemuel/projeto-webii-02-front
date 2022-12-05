@@ -1,9 +1,10 @@
 import { AppBar, Button, Toolbar, Typography } from '@mui/material';
+import Link from 'next/link';
 import Router from 'next/router';
 import { useAuth } from '../../contexts/AuthContext';
 
 function Header(): JSX.Element {
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAuthenticated } = useAuth();
 
   return (
     <AppBar
@@ -13,18 +14,15 @@ function Header(): JSX.Element {
       sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
       <Toolbar sx={{ flexWrap: 'wrap' }}>
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-          Store Manager
+          <Link href="/">Store Manager</Link>
         </Typography>
+
         <nav>
-          <Button variant="text" onClick={() => Router.push('/')}>
-            ----
-          </Button>
-          <Button variant="text" onClick={() => Router.push('/')}>
-            ----
-          </Button>
-          <Button variant="text" onClick={() => Router.push('/')}>
-            ----
-          </Button>
+          {isAuthenticated && (
+            <Button variant="text" onClick={() => Router.push('/my-stores')}>
+              Minhas Lojas
+            </Button>
+          )}
         </nav>
         {user ? (
           <Button variant="text" onClick={() => signOut()}>
