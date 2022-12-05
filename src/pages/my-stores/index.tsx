@@ -16,6 +16,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Head } from '../../infra/components/Head';
 import api from '../../services/api';
 import { withSSRAuth } from '../../utils/withSSRAuth';
+import CreateStoreModal from '../../components/CreateStoreModal';
 
 interface Store {
   id: string;
@@ -26,6 +27,8 @@ interface Store {
 
 function MyStores(): JSX.Element {
   const { user } = useAuth();
+  const [openCreateStoreModal, setOpenCreateStoreModal] = useState(false);
+
   const [stores, setStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,11 +49,18 @@ function MyStores(): JSX.Element {
   return (
     <>
       <Head title="Meus estabelecimentos" />
+      <CreateStoreModal
+        openCreateStoreModal={openCreateStoreModal}
+        onClose={() => setOpenCreateStoreModal(false)}
+        refetchStores={() => getMyStores()}
+      />
 
       <Container>
         <h1>Meus estabelecimentos</h1>
 
-        <Button variant="outlined" onClick={() => Router.push(`/create-store`)}>
+        <Button
+          variant="outlined"
+          onClick={() => setOpenCreateStoreModal(true)}>
           Criar loja
         </Button>
         <Divider variant="middle" sx={{ my: 2, mx: 0 }} />
