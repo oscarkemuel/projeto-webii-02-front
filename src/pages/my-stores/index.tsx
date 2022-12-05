@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -60,28 +61,32 @@ function MyStores(): JSX.Element {
           </Typography>
         )}
 
-        {stores.map((store) => {
-          return (
-            <Card sx={{ maxWidth: 250, bgcolor: grey[300] }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {store.name}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  {store.description}
-                </Typography>
-                <Typography variant="body2">{store.address}</Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  size="small"
-                  onClick={() => Router.push(`/dashboard/${store.id}`)}>
-                  Acessar
-                </Button>
-              </CardActions>
-            </Card>
-          );
-        })}
+        <Box flexDirection="row" display="flex" width="100%" flexWrap="wrap">
+          {stores.map((store) => {
+            return (
+              <Card
+                sx={{ width: 250, bgcolor: grey[300], m: 1 }}
+                key={store.id}>
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {store.name}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    {store.description}
+                  </Typography>
+                  <Typography variant="body2">{store.address}</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size="small"
+                    onClick={() => Router.push(`/dashboard/${store.id}`)}>
+                    Acessar
+                  </Button>
+                </CardActions>
+              </Card>
+            );
+          })}
+        </Box>
       </Container>
     </>
   );
