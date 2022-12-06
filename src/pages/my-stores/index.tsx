@@ -75,7 +75,14 @@ function MyStores(): JSX.Element {
           {stores.map((store) => {
             return (
               <Card
-                sx={{ width: 250, bgcolor: grey[300], m: 1 }}
+                sx={{
+                  width: 250,
+                  bgcolor: grey[300],
+                  m: 1,
+                  justifyContent: 'space-between',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
                 key={store.id}>
                 <CardContent>
                   <Typography variant="h5" component="div">

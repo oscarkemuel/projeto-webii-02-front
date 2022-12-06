@@ -13,6 +13,7 @@ import Router from 'next/router';
 import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import api from '../services/api';
 import FullLoading from '../components/FullLoading';
+import { Store } from '../types';
 
 interface ISignInData {
   email: string;
@@ -37,6 +38,7 @@ export type User = {
   address_id: number;
   created_at: string;
   updated_at: string;
+  stores: Store[];
 };
 
 type AuthContextType = {
