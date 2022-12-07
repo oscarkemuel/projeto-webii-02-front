@@ -7,3 +7,12 @@ export interface Store {
   address: string;
   owner: User;
 }
+
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  category: string;
+}
