@@ -48,6 +48,7 @@ type AuthContextType = {
   user: User | null;
   isLoadingSplash: boolean;
   signinIsLoading: boolean;
+  addStore: (store: Store) => Promise<void>;
 };
 
 interface ProviderProps {
@@ -123,6 +124,14 @@ export function AuthProvider({ children }: ProviderProps): JSX.Element {
       .finally(() => setSigninIsLoading(false));
   }
 
+  async function addStore(store: Store): Promise<void> {
+    if (user) {
+      const newUser = { ...user, stores: [...user!.stores, store] };
+
+      setUser(newUser);
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -131,7 +140,8 @@ export function AuthProvider({ children }: ProviderProps): JSX.Element {
         user,
         signOut,
         isLoadingSplash,
-        signinIsLoading
+        signinIsLoading,
+        addStore
       }}>
       {isLoadingSplash ? <FullLoading isLoading={isLoadingSplash} /> : children}
     </AuthContext.Provider>

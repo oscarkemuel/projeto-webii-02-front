@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { grey } from '@mui/material/colors';
 import { toast } from 'react-toastify';
 import Router from 'next/router';
+import { Delete } from '@mui/icons-material';
 import { useAuth } from '../../contexts/AuthContext';
 import { Head } from '../../infra/components/Head';
 import api from '../../services/api';
@@ -40,6 +41,16 @@ function MyStores(): JSX.Element {
       .then((response) => setStores(response.data.stores))
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => setLoading(false));
+  }
+
+  async function deleteStore(id: string): Promise<void> {
+    await api
+      .delete(`/stores/${id}`)
+      .then(() => {
+        toast.success('Loja excluída com sucesso!');
+        getMyStores();
+      })
+      .catch((error) => toast.error(error.response.data.message));
   }
 
   useEffect(() => {
@@ -94,11 +105,19 @@ function MyStores(): JSX.Element {
                   <Typography variant="body2">{store.address}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size="small"
-                    onClick={() => Router.push(`/dashboard/${store.id}`)}>
-                    Acessar
-                  </Button>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    width="100%">
+                    <Button
+                      size="small"
+                      onClick={() => Router.push(`/dashboard/${store.id}`)}>
+                      Acessar
+                    </Button>
+                    <Button size="small" onClick={() => deleteStore(store.id)}>
+                      <Delete color="error" />
+                    </Button>
+                  </Box>
                 </CardActions>
               </Card>
             );

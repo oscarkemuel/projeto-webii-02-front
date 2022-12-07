@@ -35,7 +35,7 @@ function CreateStoreModal({
   onClose,
   refetchStores
 }: Props): JSX.Element {
-  const { user } = useAuth();
+  const { user, addStore } = useAuth();
   const [loading, setLoading] = useState(false);
 
   async function createStore(payload: StorePayload): Promise<void> {
@@ -43,8 +43,9 @@ function CreateStoreModal({
 
     api
       .post('/stores', payload)
-      .then(() => {
+      .then(({ data }) => {
         toast.success('Estabelecimento criado com sucesso!');
+        addStore(data.store);
         refetchStores();
       })
       .catch((error) => toast.error(error.response.data.message));
