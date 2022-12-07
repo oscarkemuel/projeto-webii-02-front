@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
@@ -6,7 +7,9 @@ import {
 
 import { parseCookies } from 'nookies';
 
-export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
+export function withSSRAuth<P extends { [key: string]: any }>(
+  fn: GetServerSideProps<P>
+) {
   return async (
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
