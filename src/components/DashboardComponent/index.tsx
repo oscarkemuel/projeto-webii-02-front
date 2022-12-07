@@ -11,9 +11,9 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import { Settings, People, ShoppingCart, LocalMall } from '@mui/icons-material';
 import Link from 'next/link';
+import Router from 'next/router';
 import { useCanDashboard } from '../../hooks/useCanDashboard';
 import Login from '../../pages/login';
 
@@ -31,6 +31,29 @@ export function DashboardComponent({
   const userHassPermission = useCanDashboard({ storeId: Number(storeId) });
 
   if (!userHassPermission) return <Login />;
+
+  const links = [
+    {
+      title: 'Configurações',
+      href: `/dashboard/${storeId}`,
+      icon: <Settings />
+    },
+    {
+      title: 'Produtos',
+      href: `/dashboard/${storeId}/products`,
+      icon: <LocalMall />
+    },
+    {
+      title: 'Vendas',
+      href: `/dashboard/${storeId}/sales`,
+      icon: <ShoppingCart />
+    },
+    {
+      title: 'Vendedores',
+      href: `/dashboard/${storeId}/sellers`,
+      icon: <People />
+    }
+  ];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -52,13 +75,14 @@ export function DashboardComponent({
         </Toolbar>
         <Divider />
         <List>
-          {['Inbox', 'Starred'].map((text, index) => (
-            <ListItem key={text} disablePadding>
+          {links.map((link) => (
+            <ListItem
+              key={link.title}
+              disablePadding
+              onClick={() => Router.push(link.href)}>
               <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemIcon>{link.icon}</ListItemIcon>
+                <ListItemText primary={link.title} />
               </ListItemButton>
             </ListItem>
           ))}
