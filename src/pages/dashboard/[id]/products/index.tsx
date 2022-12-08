@@ -125,10 +125,10 @@ function Products(): JSX.Element {
   );
 }
 
-export const getServerSideProps = withSSRAuth(async () => {
-  return {
-    props: {}
-  };
-});
+// export const getServerSideProps = withSSRAuth(async () => {
+//   return {
+//     props: {}
+//   };
+// });
 
 export default Products;

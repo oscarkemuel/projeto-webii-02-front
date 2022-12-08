@@ -205,10 +205,10 @@ function MyStores(): JSX.Element {
   );
 }
 
-export const getServerSideProps = withSSRAuth(async () => {
-  return {
-    props: {}
-  };
-});
+// export const getServerSideProps = withSSRAuth(async () => {
+//   return {
+//     props: {}
+//   };
+// });
 
 export default MyStores;
