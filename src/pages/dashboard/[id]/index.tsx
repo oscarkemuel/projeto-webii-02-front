@@ -98,7 +98,6 @@ function StoreSettings(): JSX.Element {
                   placeholder="Digite seu nome"
                   name="name"
                   autoComplete="name"
-                  autoFocus
                   onChange={formik.handleChange}
                   value={formik.values.name}
                   error={formik.touched.name && Boolean(formik.errors.name)}

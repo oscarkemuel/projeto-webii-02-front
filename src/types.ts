@@ -16,3 +16,19 @@ export interface Product {
   quantity: number;
   category: string;
 }
+
+export interface Sale {
+  id: number;
+  created_at: string;
+  quantity: number;
+  price: number;
+  product: Product;
+  seller: {
+    user: User;
+  };
+}
+
+export interface Seller {
+  id: number;
+  user: User;
+}

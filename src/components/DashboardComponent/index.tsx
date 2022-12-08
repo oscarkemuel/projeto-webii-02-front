@@ -44,14 +44,14 @@ export function DashboardComponent({
       icon: <LocalMall />
     },
     {
-      title: 'Vendas',
-      href: `/dashboard/${storeId}/sales`,
-      icon: <ShoppingCart />
-    },
-    {
       title: 'Vendedores',
       href: `/dashboard/${storeId}/sellers`,
       icon: <People />
+    },
+    {
+      title: 'Vendas',
+      href: `/dashboard/${storeId}/sales`,
+      icon: <ShoppingCart />
     }
   ];
 

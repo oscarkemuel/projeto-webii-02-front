@@ -1,4 +1,12 @@
-import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Modal,
+  TextField,
+  Typography
+} from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -85,6 +93,8 @@ function CreateStoreModal({
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Criar Estabelecimento
         </Typography>
+
+        <Divider variant="middle" sx={{ my: 2, mx: 0 }} />
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
