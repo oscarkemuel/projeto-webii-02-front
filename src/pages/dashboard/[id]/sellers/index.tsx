@@ -19,10 +19,12 @@ import { withSSRAuth } from '../../../../utils/withSSRAuth';
 import { Seller } from '../../../../types';
 import api from '../../../../services/api';
 import AddSellerModal from '../../../../components/AddSellerModal';
+import { useAuth } from '../../../../contexts/AuthContext';
 
 function Home(): JSX.Element {
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth();
   const [sellers, setSellers] = useState<Seller[]>([]);
   const [openAddSellerModal, setOpenAddSellerModal] = useState(false);
   const [sellerIsDeleting, setSellerIsDeleting] = useState(false);
@@ -87,13 +89,15 @@ function Home(): JSX.Element {
                   <TableCell>{seller.user.name}</TableCell>
                   <TableCell>{seller.user.name}</TableCell>
                   <TableCell>
-                    <Button
-                      size="small"
-                      disabled={sellerIsDeleting}
-                      sx={{ mr: 1, border: 1, borderColor: 'error.main' }}
-                      onClick={() => removeSeller(seller.id)}>
-                      <Delete color="error" />
-                    </Button>
+                    {seller.user.id !== user?.id && (
+                      <Button
+                        size="small"
+                        disabled={sellerIsDeleting}
+                        sx={{ mr: 1, border: 1, borderColor: 'error.main' }}
+                        onClick={() => removeSeller(seller.id)}>
+                        <Delete color="error" />
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

@@ -31,6 +31,7 @@ function MyStores(): JSX.Element {
   const [openCreateStoreModal, setOpenCreateStoreModal] = useState(false);
 
   const [stores, setStores] = useState<Store[]>([]);
+  const [sellersStores, setSellersStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function getMyStores(): Promise<void> {
@@ -39,6 +40,16 @@ function MyStores(): JSX.Element {
     await api
       .get(`/stores/my-stores/${user?.id}`)
       .then((response) => setStores(response.data.stores))
+      .catch((error) => toast.error(error.response.data.message))
+      .finally(() => setLoading(false));
+  }
+
+  async function getMySellersStores(): Promise<void> {
+    setLoading(true);
+
+    await api
+      .get(`/users/${user?.id}/my-stores-sellers`)
+      .then((response) => setSellersStores(response.data.stores))
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => setLoading(false));
   }
@@ -54,6 +65,7 @@ function MyStores(): JSX.Element {
   }
 
   useEffect(() => {
+    getMySellersStores();
     getMyStores();
   }, []);
 
@@ -74,54 +86,119 @@ function MyStores(): JSX.Element {
           onClick={() => setOpenCreateStoreModal(true)}>
           Criar loja
         </Button>
-        <Divider variant="middle" sx={{ my: 2, mx: 0 }} />
 
         {!loading && stores.length === 0 && (
           <Typography variant="h6" color="textSecondary" align="center">
-            Você ainda não possui nenhum estabelecimento cadastrado.
+            Você ainda não possui nenhum estabelecimento cadastrado como dono.
           </Typography>
         )}
 
-        <Box flexDirection="row" display="flex" width="100%" flexWrap="wrap">
-          {stores.map((store) => {
-            return (
-              <Card
-                sx={{
-                  width: 250,
-                  bgcolor: grey[300],
-                  m: 1,
-                  justifyContent: 'space-between',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-                key={store.id}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {store.name}
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {store.description}
-                  </Typography>
-                  <Typography variant="body2">{store.address}</Typography>
-                </CardContent>
-                <CardActions>
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    width="100%">
-                    <Button
-                      size="small"
-                      onClick={() => Router.push(`/dashboard/${store.id}`)}>
-                      Acessar
-                    </Button>
-                    <Button size="small" onClick={() => deleteStore(store.id)}>
-                      <Delete color="error" />
-                    </Button>
-                  </Box>
-                </CardActions>
-              </Card>
-            );
-          })}
+        <Box width="100%" marginBottom={4}>
+          {stores.length > 0 ? (
+            <>
+              <h3>Dono das lojas:</h3>
+              <Box
+                flexDirection="row"
+                display="flex"
+                width="100%"
+                flexWrap="wrap">
+                {stores.map((store) => {
+                  return (
+                    <Card
+                      sx={{
+                        width: 250,
+                        bgcolor: grey[100],
+                        m: 1,
+                        justifyContent: 'space-between',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        boxShadow: 6
+                      }}
+                      key={store.id}>
+                      <CardContent>
+                        <Typography variant="h5" component="div">
+                          {store.name}
+                        </Typography>
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                          {store.description}
+                        </Typography>
+                        <Typography variant="body2">{store.address}</Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Box
+                          display="flex"
+                          justifyContent="space-between"
+                          width="100%">
+                          <Button
+                            size="small"
+                            onClick={() =>
+                              Router.push(`/dashboard/${store.id}`)
+                            }>
+                            Acessar
+                          </Button>
+                          <Button
+                            size="small"
+                            onClick={() => deleteStore(store.id)}>
+                            <Delete color="error" />
+                          </Button>
+                        </Box>
+                      </CardActions>
+                    </Card>
+                  );
+                })}
+              </Box>
+            </>
+          ) : null}
+
+          <Divider variant="middle" sx={{ my: 2, mx: 0 }} />
+
+          {sellersStores.length > 0 && (
+            <>
+              <h3>Vendedor das lojas:</h3>
+              <Box
+                flexDirection="row"
+                display="flex"
+                width="100%"
+                flexWrap="wrap">
+                {sellersStores.map((store) => {
+                  return (
+                    <Card
+                      sx={{
+                        width: 250,
+                        bgcolor: grey[100],
+                        m: 1,
+                        justifyContent: 'space-between',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        boxShadow: 6
+                      }}
+                      key={store.id}>
+                      <CardContent>
+                        <Typography variant="h5" component="div">
+                          {store.name}
+                        </Typography>
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                          {store.description}
+                        </Typography>
+                        <Typography variant="body2">{store.address}</Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Box>
+                          <Button
+                            size="small"
+                            onClick={() =>
+                              Router.push(`/dashboard/${store.id}`)
+                            }>
+                            Acessar
+                          </Button>
+                        </Box>
+                      </CardActions>
+                    </Card>
+                  );
+                })}
+              </Box>
+            </>
+          )}
         </Box>
       </Container>
     </>
