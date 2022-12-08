@@ -77,11 +77,11 @@ function CreateSaleModal({
       .post(`/stores/${storeId}/add-sale`, payload)
       .then(() => {
         toast.success('Venda adicionada com sucesso!');
+        onClose();
         refetchSales();
       })
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => {
-        onClose();
         setLoading(false);
       });
   }
