@@ -6,6 +6,8 @@ export interface Store {
   description: string;
   address: string;
   owner: User;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Product {
