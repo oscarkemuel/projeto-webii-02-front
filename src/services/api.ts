@@ -4,7 +4,7 @@ import { parseCookies } from 'nookies';
 const { authtoken } = parseCookies();
 
 const api = axios.create({
-  baseURL: 'http://localhost:3333/api/'
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api`
 });
 
 if (authtoken) {
